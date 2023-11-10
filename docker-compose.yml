@@ -1,17 +1,44 @@
 services:
   postgres:
-    image: postgres
+    image: postgres:16-alpine
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: cbctadmin
-      POSTGRES_PASSWORD: bfGWUagcc1!223Vb
-      POSTGRES_ROOT_PASSWORD: bfGWUagcc1!223Vb
+      POSTGRES_PASSWORD: lJ2JmGgQTXhUr5
+      POSTGRES_ROOT_PASSWORD: lJ2JmGgQTXhUr5
     ports:
       - 5432:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d postgres -U cbctadmin"]
       interval: 5s
       retries: 3
+    networks:
+      - cbct-network
+  backend:
+    container_name: cbct-api
+    build:
+      context: cbct-api/.
+      dockerfile: Dockerfile
+    image: cbct-api:latest
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - cbct-network
+  frontend:
+    container_name: cbct-ui
+    build:
+      context: cbct-ui/.
+      dockerfile: Dockerfile
+    image: cbct-ui:latest
+    ports:
+      - 80:80
+    depends_on:
+      - backend
     networks:
       - cbct-network
 networks:
