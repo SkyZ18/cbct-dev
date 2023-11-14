@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -66,19 +67,40 @@ class CustomerRepositoryTest {
     void findCustomerOfDatabaseById() {
         CustomerModel expected = customerModelDe;
         CustomerModel actual = customerRepository.findById(customerModelDe.getId()).get();
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "Found Customer by Id in Database");
     }
 
     @Test
     void checkIfCustomerExistsByEmail() {
         boolean actual = customerRepository.existsByEmail(customerModelDe.getEmail());
-        assertTrue(actual);
+        assertTrue(actual, "Customer exists in Database by email");
     }
 
     @Test
     void checkIfCustomerExistsByName() {
         boolean actual = customerRepository.existsByName(customerModelDe.getName());
-        assertTrue(actual);
+        assertTrue(actual, "Customer exists in Database by name");
+    }
+
+    @Test
+    void shouldFindCustomerByNameInDatabase() {
+        Optional<CustomerModel> expected = Optional.of(customerModelDe);
+        Optional<CustomerModel> actual = customerRepository.findByName(TEST_NAME);
+        assertEquals(expected, actual, "Found Customer in Database by Name");
+    }
+
+    @Test
+    void shouldFindCustomerByEmailInDatabase() {
+        Optional<CustomerModel> expected = Optional.of(customerModelDe);
+        Optional<CustomerModel> actual = customerRepository.findByEmail(TEST_EMAIL_DE);
+        assertEquals(expected, actual, "Found Customer in Database by Email");
+    }
+
+    @Test
+    void shouldFindCustomerByCountryInDatabase() {
+        List<CustomerModel> expected = Collections.singletonList(customerModelDe);
+        List<CustomerModel> actual = customerRepository.findCustomerByCountry(TEST_COUNTRY_DE);
+        assertEquals(expected, actual, "Found Customer in Database by Country");
     }
 
     @AfterEach

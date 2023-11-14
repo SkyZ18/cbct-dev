@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
@@ -19,16 +21,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class EmployeeServiceTest {
 
-    private static final String TEST_NAME = "TEST123";
-    private static final String TEST_NAME_TWO = "123TEST";
-    private static final String TEST_LASTNAME = "TEST321";
-    private static final String TEST_EMAIL_ONE = "TEST1@MAIL.CBCT";
-    private static final String TEST_EMAIL_TWO = "TEST2@MAIL.CBCT";
-    private static final String TEST_PASSWORD = "TESTPASSWORD";
-    private static final String TEST_DEPARTMENT = "TESTDEPARTMENT";
-    private static final String TEST_DEPARTMENT_TWO = "TESTDEPARTMENT2";
-    private static final Role TEST_ROLE = Role.EMPLOYEE;
+    private static final String TEST_NAME_EMPLOYEE = "TEST123";
+    private static final String TEST_NAME_EMPLOYEE2 = "123TEST";
+    private static final String TEST_LASTNAME_EMPLOYEE = "TEST321";
+    private static final String TEST_EMAIL_EMPLOYEE = "TEST1@MAIL.CBCT";
+    private static final String TEST_EMAIL_EMPLOYEE2 = "TEST2@MAIL.CBCT";
+    private static final String TEST_PASSWORD_EMPLOYEE = "TESTPASSWORD";
+    private static final String TEST_DEPARTMENT_EMPLOYEE = "TESTDEPARTMENT";
+    private static final String TEST_DEPARTMENT_EMPLOYEE2 = "TESTDEPARTMENT2";
+    private static final Role TEST_ROLE_EMPLOYEE = Role.EMPLOYEE;
 
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     EmployeeModel employeeModelOne;
     EmployeeModel employeeModelTwo;
     @Autowired
@@ -39,22 +42,22 @@ class EmployeeServiceTest {
     @BeforeEach
     void setUp() {
         employeeModelOne = EmployeeModel.builder()
-                .name(TEST_NAME)
-                .lastname(TEST_LASTNAME)
-                .email(TEST_EMAIL_ONE)
-                .password(TEST_PASSWORD)
-                .department(TEST_DEPARTMENT)
-                .role(TEST_ROLE)
+                .name(TEST_NAME_EMPLOYEE)
+                .lastname(TEST_LASTNAME_EMPLOYEE)
+                .email(TEST_EMAIL_EMPLOYEE)
+                .password(passwordEncoder.encode(TEST_PASSWORD_EMPLOYEE))
+                .department(TEST_DEPARTMENT_EMPLOYEE)
+                .role(TEST_ROLE_EMPLOYEE)
                 .build();
         employeeRepository.save(employeeModelOne);
 
         employeeModelTwo = EmployeeModel.builder()
-                .name(TEST_NAME_TWO)
-                .lastname(TEST_LASTNAME)
-                .email(TEST_EMAIL_TWO)
-                .password(TEST_PASSWORD)
-                .department(TEST_DEPARTMENT_TWO)
-                .role(TEST_ROLE)
+                .name(TEST_NAME_EMPLOYEE2)
+                .lastname(TEST_LASTNAME_EMPLOYEE)
+                .email(TEST_EMAIL_EMPLOYEE2)
+                .password(passwordEncoder.encode(TEST_PASSWORD_EMPLOYEE))
+                .department(TEST_DEPARTMENT_EMPLOYEE2)
+                .role(TEST_ROLE_EMPLOYEE)
                 .build();
         employeeRepository.save(employeeModelTwo);
     }
