@@ -15,22 +15,22 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long> {
     boolean existsByEmail(String email);
 
     @Query("""
-select n from EmployeeModel n where n.name = :name
+select t from EmployeeModel t where t.name = :name
 """)
     List<EmployeeModel> findByName(String name);
 
     @Query("""
-select l from EmployeeModel l where l.lastname = :lastname
+select t from EmployeeModel t where t.lastname = :lastname
 """)
     List<EmployeeModel> findByLastname(String lastname);
 
     @Query("""
-select e from EmployeeModel e where e.email = :email
+select t from EmployeeModel t where t.email = :email
 """)
     Optional<EmployeeModel> findByEmail(String email);
 
     @Query("""
-select d from EmployeeModel d where d.department = :department
+select t from EmployeeModel t where t.department = :department
 """)
     List<EmployeeModel> findByDepartment(String department);
 }

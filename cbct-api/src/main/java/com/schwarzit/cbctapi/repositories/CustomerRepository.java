@@ -16,17 +16,17 @@ public interface CustomerRepository extends JpaRepository<CustomerModel, Long> {
     boolean existsByEmail(String email);
 
     @Query("""
-select e from CustomerModel e where e.email = :email
+select t from CustomerModel t where t.email = :email
 """)
     Optional<CustomerModel> findByEmail(String email);
 
     @Query("""
-select n from CustomerModel n where n.name = :name
+select t from CustomerModel t where t.name = :name
 """)
     Optional<CustomerModel> findByName(String name);
 
     @Query("""
-select c from CustomerModel c where c.country = :country
+select t from CustomerModel t where t.country = :country
 """)
     List<CustomerModel> findCustomerByCountry(String country);
 
