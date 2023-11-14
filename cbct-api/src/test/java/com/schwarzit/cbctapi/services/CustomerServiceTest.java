@@ -93,7 +93,7 @@ class CustomerServiceTest {
     @Test
     void getCustomerOfDatabaseByName() {
         CustomerModel expected = customerModelDe;
-        CustomerModel actual = customerService.getCustomerByName(customerModelDe.getName()).get();
+        CustomerModel actual = customerService.getCustomerByName(TEST_NAME_CUSTOMER).get();
         assertEquals(expected, actual, "Customer with name TEST123 found");
     }
 
@@ -142,7 +142,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void shouldCreateNewCustomer() {
+    void shouldCreateNewCustomer() throws Exception {
         RegisterCustomerResponse response = customerService.registerNewCustomer(register);
         CustomerModel actualBody = customerRepository.findByName(response.getName()).get();
         CustomerModel expectedBody = CustomerModel.builder()

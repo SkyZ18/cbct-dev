@@ -45,7 +45,7 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public RegisterCustomerResponse registerCustomer(@RequestBody RegisterCustomerRequest request) {
+    public RegisterCustomerResponse registerCustomer(@RequestBody RegisterCustomerRequest request) throws Exception{
         return service.registerNewCustomer(request);
     }
 }

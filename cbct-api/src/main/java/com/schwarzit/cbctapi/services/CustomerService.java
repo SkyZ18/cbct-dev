@@ -44,8 +44,8 @@ public class CustomerService {
         return ResponseEntity.ok(customerRepository.findCustomerByCountry(country));
     }
 
-    public RegisterCustomerResponse registerNewCustomer(RegisterCustomerRequest registerCustomerRequest) {
-
+    public RegisterCustomerResponse registerNewCustomer(RegisterCustomerRequest registerCustomerRequest) throws Exception {
+        if (!registerCustomerRequest.getName().isEmpty() && !registerCustomerRequest.getEmail().isEmpty() && !registerCustomerRequest.getPassword().isEmpty() && !registerCustomerRequest.getCountry().isEmpty()) {
             CustomerModel customer = CustomerModel.builder()
                     .name(registerCustomerRequest.getName())
                     .email(registerCustomerRequest.getEmail())
@@ -60,6 +60,10 @@ public class CustomerService {
                     .name(customer.getName())
                     .email(customer.getEmail())
                     .build();
+
+        } else throw new Exception();
+
+
     }
 
 }
