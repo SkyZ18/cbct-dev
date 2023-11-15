@@ -1,9 +1,6 @@
 package com.schwarzit.cbctapi.controllers;
 
-import com.schwarzit.cbctapi.dtos.RegisterCustomerRequest;
-import com.schwarzit.cbctapi.dtos.RegisterCustomerResponse;
 import com.schwarzit.cbctapi.models.CustomerModel;
-import com.schwarzit.cbctapi.repositories.CustomerRepository;
 import com.schwarzit.cbctapi.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +39,5 @@ public class CustomerController {
     @GetMapping("/getByCountry/{country}")
     public ResponseEntity<List<CustomerModel>> getByCountry(@PathVariable("country") String country) {
         return service.getAllCustomersOfOneCountry(country);
-    }
-
-    @PostMapping("/register")
-    public RegisterCustomerResponse registerCustomer(@RequestBody RegisterCustomerRequest request) throws Exception{
-        return service.registerNewCustomer(request);
     }
 }
