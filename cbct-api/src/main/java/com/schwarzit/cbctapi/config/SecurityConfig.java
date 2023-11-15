@@ -2,6 +2,7 @@ package com.schwarzit.cbctapi.config;
 
 import com.schwarzit.cbctapi.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -29,6 +30,9 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private final LogoutHandler logoutHandler;
+
+    @Value("${cors.allowedOrigins}")
+    private String allowedOrigins;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -58,7 +62,7 @@ public class SecurityConfig {
     private Customizer<CorsConfigurer<HttpSecurity>> getCorsConfigurerCustomizer() {
         return httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(request -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
-            corsConfiguration.setAllowedOrigins(List.of("http://localhost/", "http://localhost:4200/"));
+            corsConfiguration.setAllowedOrigins(List.of(allowedOrigins));
             corsConfiguration.setAllowedMethods(List.of("*"));
             corsConfiguration.setAllowedHeaders(List.of("*"));
             corsConfiguration.setMaxAge(2400L);

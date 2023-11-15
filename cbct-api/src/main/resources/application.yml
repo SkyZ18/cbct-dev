@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: "cbct-api"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: cbctadmin
+    password: lJ2JmGgQTXhUr5
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+        format_sql: true
+    show-sql: true
+    database: postgresql
+
+cors:
+  allowedOrigins: http://localhost/,http://localhost:4200/
