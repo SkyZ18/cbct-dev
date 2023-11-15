@@ -79,6 +79,8 @@ class CustomerServiceTest {
     @Test
     void getCustomerFromDatabaseById() {
         CustomerModel expected = customerModelDe;
+        boolean check = customerService.getCustomerById(customerModelDe.getId()).isPresent();
+        assertTrue(check);
         CustomerModel actual = customerService.getCustomerById(customerModelDe.getId()).get();
         assertEquals(expected, actual, "DE Customer found");
     }
